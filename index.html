@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Gian Rovik Somes</title>
+    <!-- Favicons -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👤</text></svg>">
+
+    <!-- Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+    
+    <style>
+        :root {
+            --main-color: #212529;
+            --text-color: #fff;
+            --accent-color: #0d6efd;
+            --sidebar-width: 270px;
+            --interest-icon-size: 2.8rem;
+            --interest-box-height: 160px;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar-header {
+            background-color: var(--main-color);
+            padding: 20px;
+            width: var(--sidebar-width);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-img {
+            margin: 20px auto;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #6c757d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .name h3 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 10px 0 20px;
+            font-weight: 600;
+        }
+        
+        .sidebar-header ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .sidebar-header ul li {
+            margin: 12px 0;
+        }
+        
+        .sidebar-header ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-header ul li a:hover,
+        .sidebar-header ul li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+        }
+        
+        .sidebar-header ul li a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Main Content Styling */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #212529;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .about .content h2,
+        .education .content h2,
+        .skills .content h2,
+        .interests .content h2,
+        .awards .content h2 {
+            font-size: 1.8rem;
+            color: #212529;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .about .content ul,
+        .education .content ul,
+        .skills .content ul,
+        .interests .content ul,
+        .awards .content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .about .content ul li,
+        .education .content ul li,
+        .skills .content ul li,
+        .interests .content ul li,
+        .awards .content ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .about .content ul li i,
+        .education .content ul li i,
+        .skills .content ul li i,
+        .interests .content ul li i,
+        .awards .content ul li i {
+            color: var(--accent-color);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .about .content ul li strong,
+        .education .content ul li strong,
+        .skills .content ul li strong,
+        .interests .content ul li strong,
+        .awards .content ul li strong {
+            margin-right: 10px;
+            min-width: 100px;
+            color: #495057;
+        }
+        
+        .about .img-fluid,
+        .education .img-fluid,
+        .skills .img-fluid,
+        .interests .img-fluid,
+        .awards .img-fluid {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fst-italic {
+            color: #6c757d;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 20px 0;
+        }
+        
+        /* Education Section */
+        .education-item {
+            padding: 20px;
+            border-left: 2px solid var(--accent-color);
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .education-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            left: -9px;
+            top: 0;
+        }
+        
+        .education-item h4 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .education-item h5 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .education-item p {
+            margin-bottom: 0;
+        }
+        
+        /* Skills Section */
+        .progress {
+            height: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        /* Interests Section - UPDATED */
+        .interests-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+        
+        .interest-item {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: var(--interest-box-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .interest-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .interest-item i {
+            font-size: var(--interest-icon-size);
+            color: var(--accent-color);
+            margin-bottom: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .interest-item:hover i {
+            transform: scale(1.2);
+        }
+        
+        .interest-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 0;
+        }
+        
+        /* Awards Section */
+        .award-item {
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .award-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .award-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .award-item .date {
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .sidebar-header {
+                width: 220px;
+            }
+            
+            .main-content {
+                margin-left: 220px;
+            }
+            
+            .interests-container {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 20px;
+            }
+            
+            .interest-item {
+                padding: 25px 15px;
+                height: 150px;
+            }
+            
+            .interest-item i {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar-header {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+            }
+            
+            .profile-img {
+                width: 120px;
+                height: 120px;
+                margin: 10px auto;
+            }
+            
+            .sidebar-header ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .sidebar-header ul li {
+                margin: 5px;
+            }
+            
+            .sidebar-header ul li a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .about .content h2,
+            .education .content h2,
+            .skills .content h2,
+            .interests .content h2,
+            .awards .content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 50px 0;
+            }
+            
+            .interests-container {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            
+            .interest-item {
+                padding: 20px 10px;
+                height: 140px;
+            }
+            
+            .interest-item i {
+                font-size: 2.2rem;
+                margin-bottom: 12px;
+            }
+            
+            .interest-item h4 {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .interests-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .interest-item {
+                padding: 20px 10px;
+                height: 130px;
+            }
+            
+            .interest-item i {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            
+            .interest-item h4 {
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Custom scrollbar for sidebar */
+        .sidebar-header::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .sidebar-header::-webkit-scrollbar-thumb {
+            background: #495057;
+            border-radius: 10px;
+        }
+        
+        .sidebar-header::-webkit-scrollbar-thumb:hover {
+            background: #6c757d;
+        }
+    </style>
+</head>
+<body class="portfolio-page">
+    <!-- Sidebar -->
+    <header id="header" class="sidebar-header dark-background d-flex flex-column">
+        <div class="profile-img">
+            <img src="assets/img/img1.jpg" 
+                 alt="Gian Rovik Somes" class="img-fluid">
+        </div>
+
+        <div class="name">
+            <h3>Gian Rovik Somes</h3>
+        </div>
+
+        <ul>
+            <li><a href="#home" class="nav-link"><i class="bi bi-house"></i> Home</a></li>
+            <li><a href="#about" class="nav-link"><i class="bi bi-person"></i> About</a></li>
+            <li><a href="#education" class="nav-link"><i class="bi bi-book"></i> Education</a></li>
+            <li><a href="#skills" class="nav-link"><i class="bi bi-person-fill-gear"></i> Skills</a></li>
+            <li><a href="#interests" class="nav-link"><i class="bi bi-person-hearts"></i> Interests</a></li>
+            <li><a href="#projects" class="nav-link"><i class="bi bi-trophy"></i> Projects</a></li>
+        </ul>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <section id="home" class="home-section">
+            <!-- Hero section can be added here later -->
+        </section>
+        
+        <section id="about" class="about section">
+            <!-- Section Title -->
+            <div class="container section-title">
+                <h2>About</h2>
+                <p>I am a student from PHINMA University Of Iloilo, I passionately love to create website.</p>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+                <div class="row gy-4 justify-content-center">
+                    <div class="col-lg-4">
+                        <img src="assets/img/img4.jpg" 
+                             class="img-fluid" 
+                             alt="Profile Image">
+                    </div>
+                    <div class="col-lg-8 content">
+                        <h2>UI/UX Designer &amp; Backend Programmer.</h2>
+                        <p class="fst-italic py-3">
+                            From the first time I used a computer, I was fascinated by how it works and what it can do. This fascination led me to explore the world of programming and web development, where I discovered my passion for creating beautiful and functional websites.
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>March 18, 2005</span></li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.giansomes.com</span></li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+123 456 7890</span></li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Iloilo City, Philippines</span></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>20</span></li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Course:</strong> <span>Information Of Technology</span></li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>gibu.somes.ui@phinmaed.com</span></li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="py-3">
+                            I am currently a third-year student at PHINMA University of Iloilo, where I am pursuing a degree in Information Technology. Throughout my academic journey, I have honed my skills in various programming languages and web development frameworks, allowing me to create dynamic and responsive websites.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="education" class="education section">
+            <div class="container section-title">
+                <h2>Education</h2>
+                <p>My educational journey and academic achievements.</p>
+            </div>
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="education-item">
+                            <h4>Bachelor of Science in Information Technology</h4>
+                            <h5>PHINMA University of Iloilo</h5>
+                            <div class="date"><i class="bi bi-calendar-event"></i> 2023 - Present</div>
+                            <p>Currently pursuing my degree with a focus on web development and software engineering. Maintaining a GPA of 3.8/4.0.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="education-item">
+                            <h4>Senior High School - GAS Strand</h4>
+                            <h5>Carlos Lopez National High School</h5>
+                            <div class="date"><i class="bi bi-calendar-event"></i> 2021 - 2023</div>
+                            <p>
+                            Graduated with honors in the General Academic Strand. Excelled in Research Study.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="education-item">
+                            <h4>Junior High School</h4>
+                            <h5>Carlos Lopez National High School</h5>
+                            <div class="date"><i class="bi bi-calendar-event"></i> 2017 - 2021</div>
+                            <p>Completed as average junior high school. Developed interest in hardware through basic computer courses.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="education-item">
+                            <h4>Elementary Education</h4>
+                            <h5>Bagacay Elementary School</h5>
+                            <div class="date"><i class="bi bi-calendar-event"></i> 2011 - 2017</div>
+                            <p>Graduated as an average class student. Showed early aptitude for english and science interest.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="skills" class="skills section">
+            <div class="container section-title">
+                <h2>Skills</h2>
+                <p>My technical competencies and proficiency levels.</p>
+            </div>
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="skill">
+                            <div class="skill-name">
+                                <span>HTML/CSS</span>
+                                <span>50%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <div class="skill-name">
+                                <span>JavaScript</span>
+                                <span>20%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <div class="skill-name">
+                                <span>UI/UX Design</span>
+                                <span>50%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="skill">
+                            <div class="skill-name">
+                                <span>PHP</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <div class="skill-name">
+                                <span>Python</span>
+                                <span>50%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <div class="skill-name">
+                                <span>Database Management</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="interests" class="interests section">
+            <div class="container section-title">
+                <h2>Interests</h2>
+                <p>My passions and hobbies beyond coding.</p>
+            </div>
+            
+            <div class="container">
+                <div class="interests-container">
+                    <div class="interest-item">
+                        <i class="bi bi-code-slash"></i>
+                        <h4>Web Development</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-code-square"></i>
+                        <h4>Programming</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-flower1"></i>
+                        <h4>Gardening</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-book"></i>
+                        <h4>Reading Narratives</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-controller"></i>
+                        <h4>Gaming</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-airplane"></i>
+                        <h4>Travel</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-lightbulb"></i>
+                        <h4>IoT Projects</h4>
+                    </div>
+                    
+                    <div class="interest-item">
+                        <i class="bi bi-music-note-beamed"></i>
+                        <h4>Music</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="awards section">
+            <div class="container section-title">
+                <h2>Projects</h2>
+                <p>Project and achievements throughout my academic journey.</p>
+            </div>
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="award-item">
+                            <h4>GUI Calculator System</h4>
+                            <div class="date"><i class="bi bi-kanban"></i> 2024</div>
+                            <p>Passed a 1st year Project system using java program that can creates a functioning calculator system.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="award-item">
+                            <h4>Music Playlist Website</h4>
+                            <div class="date"><i class="bi bi-kanban"></i> 2024 - Present</div>
+                            <p>Passed a UI/UX design project that is made of colorful interactive and user friendly website for music lovers.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="award-item">
+                            <h4>Company Job Offering System</h4>
+                            <div class="date"><i class="bi bi-kanban"></i> 2024</div>
+                            <p>Awarded for the most innovative capstone proposal that can be beneficial for those who seek jobs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="award-item">
+                            <h4>Carezonee Animal Welfare System</h4>
+                            <div class="date"><i class="bi bi-kanban"></i> 2025</div>
+                            <p>Awarded for creating an Animal Welfare System that can be helpful for stray animals that can help access for adoption</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Simple script to handle navigation and active states
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add active class to current page link
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Function to set active link
+            function setActiveLink() {
+                const sections = document.querySelectorAll('section');
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // Set active link on scroll
+            window.addEventListener('scroll', setActiveLink);
+            
+            // Set active link on click
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Scroll to section
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Initialize active link on page load
+            setActiveLink();
+        });
+    </script>
+</body>
+</html>
